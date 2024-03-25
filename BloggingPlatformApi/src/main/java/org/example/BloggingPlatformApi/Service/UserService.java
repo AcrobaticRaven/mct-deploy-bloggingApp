@@ -3,6 +3,7 @@ package org.example.BloggingPlatformApi.Service;
 import org.example.BloggingPlatformApi.Model.AuthenticationToken;
 import org.example.BloggingPlatformApi.Model.DTO.SignInInput;
 import org.example.BloggingPlatformApi.Model.DTO.SignUpOutput;
+import org.example.BloggingPlatformApi.Model.Enums.GENDER;
 import org.example.BloggingPlatformApi.Model.User;
 import org.example.BloggingPlatformApi.Repository.IUserRepo;
 import org.example.BloggingPlatformApi.Service.HashingUtility.PasswordEncrypter;
@@ -92,6 +93,14 @@ public class UserService {
         authService.deleteAuth(authenticationToken);
         return "User signed out successfully";
     }
+
+public long getGenderCount(GENDER gender){
+        long count = userRepo.findAll().stream()
+                .filter(user->user.getGender().equals(gender))
+                .count();
+
+        return count;
+}
 
 
 }

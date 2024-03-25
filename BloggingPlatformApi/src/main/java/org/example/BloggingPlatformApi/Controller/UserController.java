@@ -3,6 +3,7 @@ package org.example.BloggingPlatformApi.Controller;
 import jakarta.validation.Valid;
 import org.example.BloggingPlatformApi.Model.DTO.SignInInput;
 import org.example.BloggingPlatformApi.Model.DTO.SignUpOutput;
+import org.example.BloggingPlatformApi.Model.Enums.GENDER;
 import org.example.BloggingPlatformApi.Model.User;
 import org.example.BloggingPlatformApi.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,9 @@ public class UserController {
         return userService.signOutUser(mail);
     }
 
+
+    @GetMapping("User/{gender}")
+    public long getGenderCount(@PathVariable GENDER gender){
+        return userService.getGenderCount(gender);
+    }
 }

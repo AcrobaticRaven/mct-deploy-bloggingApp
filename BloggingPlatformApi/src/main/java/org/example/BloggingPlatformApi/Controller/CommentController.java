@@ -18,8 +18,8 @@ public class CommentController {
         return commentService.addComment(comment);
     }
 
-    @GetMapping("Comment/Id")
-    public Comment getCommentById(@RequestParam Integer Id){
+    @GetMapping("Comment/{Id}")
+    public Comment getCommentById(@PathVariable Integer Id){
         return commentService.getCommentById(Id);
     }
 
@@ -33,13 +33,18 @@ public class CommentController {
         return commentService.updateComments(comment,ownerId);
     }
 
-    @DeleteMapping("Comment/{Id}")
-    public String deleteComment(@PathVariable Integer Id, @RequestParam Integer currentUserId){
+    @DeleteMapping("Comment/{Id}/{currentUserId}")
+    public String deleteComment(@PathVariable Integer Id, @PathVariable Integer currentUserId){
         return commentService.deleteComment(Id,currentUserId);
     }
 
-    @GetMapping("Comments/post")
-    public List<Comment>getCommentsByPost(@RequestParam Integer Id){
-        return commentService.getCommentsByPost(Id);
+    @GetMapping("Comments/{postId}")
+    public List<Comment>getCommentsByPost(@PathVariable Integer postId){
+        return commentService.getCommentsByPost(postId);
+    }
+
+    @GetMapping("Comments/commentedTime")
+    public List<Comment>sortByCommentedTime(){
+       return commentService.sortCommentsByTime();
     }
 }

@@ -5,7 +5,8 @@ import org.example.BloggingPlatformApi.Repository.ICommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class CommentService {
             if (commentOptional.isPresent()) {
                 Comment comment1 = commentOptional.get();
                 comment1.setCommentText(comment.getCommentText());
+                comment1.setCommentedTime(LocalDateTime.now());
                 commentRepo.save(comment1);
                 return "Comment has been updated";
             }
@@ -53,8 +55,9 @@ public class CommentService {
         return commentRepo.findById(Id).orElse(null);
     }
 
+
     public List<Comment>getCommentsByPost(Integer Id){
-        List<Comment>commentList = new ArrayList<>();
+ /*      List<Comment>commentList = new ArrayList<>();
         for(Comment c : commentRepo.findAll()){
             if(c.getCommentedPost().getPostId().equals(Id)){
                 commentList.add(c);
@@ -69,6 +72,21 @@ public class CommentService {
           }
 
         }return commentList;
+
+*/
+
+     List<Comment>commentList=commentRepo.findAll().stream()
+                .filter(comment->comment.getCommentedPost().getPostId().equals(Id))
+                .toList();
+     return commentList;
+
+    }
+
+    public List<Comment>sortCommentsByTime(){
+        List<Comment>sortedList = commentRepo.findAll().stream()
+                .sorted(Comparator.comparing(Comment::getCommentedTime))
+                .toList();
+        return sortedList;
     }
 
 

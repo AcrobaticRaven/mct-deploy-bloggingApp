@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.BloggingPlatformApi.Model.Enums.GENDER;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer blogUserId;
+    private GENDER gender;
     private String userName;
     @Email(message = "Incorrect email format")
     private String userMail;
